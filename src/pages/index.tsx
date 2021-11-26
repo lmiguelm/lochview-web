@@ -1,10 +1,5 @@
-import styled from 'styled-components';
+import SignIn from '../pages/signin';
 
-const Title = styled.h1`
-  font-size: 50px;
-  color: ${({ theme }) => theme.colors.primary};
-`;
-
-export default function Home() {
-  return <Title>LochView</Title>;
+export default function Signin() {
+  return <SignIn />;
 }
