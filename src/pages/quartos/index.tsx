@@ -5,18 +5,21 @@ import { api } from '../../services/api';
 
 import { Container } from './styles';
 
-type User = {
+type Quarto = {
   id: string;
-  email: string;
-  nome: string;
-  tipo: string;
+  titulo: string;
+  descricao: string;
+  imagens: {
+    id: string;
+    url: string;
+  }[];
 };
 
-export default function Usuarios() {
+export default function Quartos() {
   const { push } = useRouter();
   const { isLogged, signOut } = useAuth();
 
-  const [users, setUsers] = useState<User[]>([]);
+  const [quartos, setQuartos] = useState<Quarto[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,17 +27,17 @@ export default function Usuarios() {
   }, []);
 
   useEffect(() => {
-    async function fetchUsers() {
+    async function fetchQuartos() {
       try {
-        const response = await api.get<User[]>('/users');
-        setUsers(response.data);
+        const response = await api.get<Quarto[]>('/rooms');
+        setQuartos(response.data);
         setLoading(false);
       } catch {
         await signOut();
         push('dashboard');
       }
     }
-    fetchUsers();
+    fetchQuartos();
   }, []);
 
   if (loading) {
@@ -60,19 +63,21 @@ export default function Usuarios() {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Nome</th>
-              <th>Email</th>
-              <th>Tipo</th>
+              <th>Quarto</th>
+              <th>Título</th>
+              <th>Descrição</th>
             </tr>
           </thead>
 
           <tbody>
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.nome}</td>
-                <td>{user.email}</td>
-                <td>{user.tipo}</td>
+            {quartos.map((quarto) => (
+              <tr key={quarto.id}>
+                <td>{quarto.id}</td>
+                <td>
+                  <img src={quarto.imagens[0].url} alt={quarto.titulo} />
+                </td>
+                <td>{quarto.titulo}</td>
+                <td>{quarto.descricao}</td>
               </tr>
             ))}
           </tbody>
@@ -80,7 +85,4 @@ export default function Usuarios() {
       </main>
     </Container>
   );
-}
-function signOut() {
-  throw new Error('Function not implemented.');
 }

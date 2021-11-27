@@ -1,4 +1,4 @@
-import React, { useState, useCallback, createContext, ReactNode } from 'react';
+import React, { useState, useCallback, createContext, ReactNode, useEffect } from 'react';
 import { api } from '../services/api';
 
 type AuthContextData = {
@@ -21,6 +21,16 @@ export function AuthProvider({ children }: Props) {
   const [isLogged, setIsLogged] = useState(false);
   const [token, setToken] = useState<string | null>(null);
 
+  useEffect(() => {
+    const token = localStorage.getItem('@lochview:token');
+
+    if (token) {
+      api.defaults.headers.common['Authorization'] = token;
+      setToken(token);
+      setIsLogged(true);
+    }
+  }, []);
+
   const signIn = useCallback(
     async (email: string, password: string) => {
       try {
@@ -34,6 +44,8 @@ export function AuthProvider({ children }: Props) {
         setIsLogged(true);
         setToken(token);
 
+        localStorage.setItem('@lochview:token', token);
+
         api.defaults.headers.common['Authorization'] = token;
       } catch (error) {
         console.log(error);
@@ -45,6 +57,8 @@ export function AuthProvider({ children }: Props) {
   const signOut = useCallback(async () => {
     setIsLogged(false);
     setToken(null);
+    api.defaults.headers.common['Authorization'] = null;
+    localStorage.clear();
   }, [isLogged]);
 
   return (

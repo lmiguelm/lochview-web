@@ -45,6 +45,8 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Poppins:ital,wght@0,400;0,500;0,700;1,400&display=swap"
             rel="stylesheet"
           />
+
+          <title>LochView - Adm</title>
         </Head>
 
         <body>

@@ -19,7 +19,7 @@ export const Content = styled.main`
   padding: 30px;
 `;
 
-export const Form = styled.div`
+export const Form = styled.form`
   flex: 1;
   width: 50%;
   min-width: 300px;
