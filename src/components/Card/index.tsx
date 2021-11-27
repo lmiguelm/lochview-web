@@ -16,7 +16,7 @@ export function Card({ title, ...rest }: Props) {
   const { colors } = useTheme();
 
   return (
-    <Container>
+    <Container {...rest}>
       {title === 'clientes' && <FiUser size={75} color={colors.primary} />}
       {title === 'reservas' && <FiCalendar size={75} color={colors.primary} />}
       {title === 'relatórios' && <HiDocumentReport size={75} color={colors.primary} />}
