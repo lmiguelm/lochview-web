@@ -1,25 +1,22 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useAuth } from '../../hooks/useAuth';
-import { api } from '../../services/api';
+import { useAuth } from '../hooks/useAuth';
+import { api } from '../services/api';
 
-import { Container } from './styles';
+import { Container } from '../styles/pages/usuarios';
 
-type Quarto = {
+type User = {
   id: string;
-  titulo: string;
-  descricao: string;
-  imagens: {
-    id: string;
-    url: string;
-  }[];
+  email: string;
+  nome: string;
+  tipo: string;
 };
 
-export default function Quartos() {
+export default function Usuarios() {
   const { push } = useRouter();
   const { isLogged, signOut } = useAuth();
 
-  const [quartos, setQuartos] = useState<Quarto[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -27,17 +24,17 @@ export default function Quartos() {
   }, []);
 
   useEffect(() => {
-    async function fetchQuartos() {
+    async function fetchUsers() {
       try {
-        const response = await api.get<Quarto[]>('/rooms');
-        setQuartos(response.data);
+        const response = await api.get<User[]>('/users');
+        setUsers(response.data);
         setLoading(false);
       } catch {
         await signOut();
         push('dashboard');
       }
     }
-    fetchQuartos();
+    fetchUsers();
   }, []);
 
   if (loading) {
@@ -63,21 +60,19 @@ export default function Quartos() {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Quarto</th>
-              <th>Título</th>
-              <th>Descrição</th>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Tipo</th>
             </tr>
           </thead>
 
           <tbody>
-            {quartos.map((quarto) => (
-              <tr key={quarto.id}>
-                <td>{quarto.id}</td>
-                <td>
-                  <img src={quarto.imagens[0].url} alt={quarto.titulo} />
-                </td>
-                <td>{quarto.titulo}</td>
-                <td>{quarto.descricao}</td>
+            {users.map((user) => (
+              <tr key={user.id}>
+                <td>{user.id}</td>
+                <td>{user.nome}</td>
+                <td>{user.email}</td>
+                <td>{user.tipo}</td>
               </tr>
             ))}
           </tbody>
@@ -85,4 +80,7 @@ export default function Quartos() {
       </main>
     </Container>
   );
+}
+function signOut() {
+  throw new Error('Function not implemented.');
 }

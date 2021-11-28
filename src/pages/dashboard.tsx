@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-import { Card } from '../../components/Card';
-import { Header } from '../../components/Header';
+import { Card } from '../components/Card';
+import { Header } from '../components/Header';
 
-import { Container, Content } from './styles';
-import { useAuth } from '../../hooks/useAuth';
+import { Container, Content } from '../styles/pages/dashboard';
+import { useAuth } from '../hooks/useAuth';
 
 export default function Dashboard() {
   const { push } = useRouter();

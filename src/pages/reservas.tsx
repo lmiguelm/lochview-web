@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
-import { useAuth } from '../../hooks/useAuth';
-import { api } from '../../services/api';
+import { useAuth } from '../hooks/useAuth';
+import { api } from '../services/api';
 
-import { Container } from './styles';
-import ptBR from 'date-fns/esm/locale/pt-BR';
+import { Container } from '../styles/pages/reservas';
+import ptBR from 'date-fns/locale/pt-BR';
 
 type Reserva = {
   id: string;

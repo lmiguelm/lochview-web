@@ -1,15 +1,15 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { Aside } from '../../components/Aside';
-import { Button } from '../../components/Button';
-import { Input } from '../../components/Input';
-import { Logo } from '../../components/Logo';
+import { Aside } from '../components/Aside';
+import { Button } from '../components/Button';
+import { Input } from '../components/Input';
+import { Logo } from '../components/Logo';
 
-import { Container, Content, Form } from './styles';
+import { Container, Content, Form } from '../styles/pages/signin';
 
 import { useTheme } from 'styled-components';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../hooks/useAuth';
 
 export default function SignIn() {
   const { colors } = useTheme();
